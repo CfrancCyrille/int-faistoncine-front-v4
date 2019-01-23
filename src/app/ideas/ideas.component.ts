@@ -107,7 +107,7 @@ export class IdeasComponent implements OnInit {
     console.log(this.idea)
     console.log(this.motscles)
 this.idea= new Idea();
-   
+
 
 
   }
