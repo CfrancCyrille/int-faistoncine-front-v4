@@ -1,0 +1,8 @@
+.liste {
+    margin-bottom: 50px;
+}
+
+li {
+    border: solid 1px black;
+    list-style: none;
+}

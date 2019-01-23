@@ -1,0 +1,34 @@
+
+<button class="liste" (click)="displayComments()" *ngIf="isCommentDisplayed==false">Afficher commentaires</button>
+<button (click)="hideComments()" *ngIf="isCommentDisplayed==true">Masquer commentaires</button>
+
+<div class="liste" *ngIf="isCommentDisplayed==true">  
+<ul *ngFor="let commentaire of commentaires">
+  <li>
+  <p>{{commentaire.text}}</p>
+  <p>par {{commentaire.author}}, le {{commentaire.date | date:"dd/MM/yyyy hh:mm" }}
+    <br>
+    <app-avispositif></app-avispositif><app-avisnegatif></app-avisnegatif></p>
+  <button (click)="editCommentaire($event, commentaire)">Editer</button>
+  <button *ngIf="editState && commentaireToEdit.id == commentaire.id" (click)="clearState()">Clear</button>
+ 
+  <div *ngIf="editState && commentaireToEdit.id == commentaire.id">
+    <form (ngSubmit)="updateCommentaire(commentaire)">
+        <div class="row">
+            <div class="input-field col s6">
+              <input type="text" placeholder="Add comment" [(ngModel)]="commentaire.text" name="commentaire">
+            </div>
+            <input type="submit" value="mettre a jour" class="btn">
+            <button (click)="deleteCommentaire($event, commentaire)">Effacer commentaire</button>
+          </div>
+    </form>
+  </div>
+
+  </li>
+  </ul>
+</div>
+<div>
+<!--<input call="text" type="text" [(ngModel)] ="newtext">
+<br>
+<button (click)="addComment()">Ajouter commentaire</button>
+</div>-->

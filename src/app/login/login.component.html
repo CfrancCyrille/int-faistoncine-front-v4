@@ -1,0 +1,41 @@
+<h2>Login</h2>
+
+<div id="google">
+  <div *ngIf="authenticationService.user | async; then authenticated else guest">
+      <!-- template will replace this div -->
+  </div>
+      <!-- User NOT logged in -->
+      <ng-template #guest>
+
+      <button (click)="authenticationService.googleLogin()" class="btn btn-success">
+      <i class="fa fa-google"></i> Connect Google
+      </button>
+
+      </ng-template>
+
+      <!-- User logged in -->
+      <ng-template #authenticated>
+
+      <div *ngIf="authenticationService.user | async as user">
+          <form [formGroup]="pseudoForm" (ngSubmit)="onSubmit()">
+            <div class="form-group">
+              <label for="pseudo">Pseudo</label>
+              <input type="text" formControlName="pseudo" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.pseudo.errors }" />
+              <div *ngIf="submitted && f.pseudo.errors" class="invalid-feedback">
+                <div *ngIf="f.pseudo.errors.required">Pseudo is required</div>
+              </div>
+              
+            </div>
+            <div class="form-group">
+                <button type="submit" [disabled]="loading" (click)="onSubmit()" class="btn btn-primary">Enter</button>
+                <!-- <button (click)="authenticationService.updateUsername(pseudo)">Enter</button> -->
+            </div>
+          </form>
+          <img [src]="user.photoURL" id="picture">
+          <p>UID: {{ user.uid }}</p>
+          <button (click)="authenticationService.signOut()">Logout</button>
+        </div>
+      </ng-template>
+</div>
+
+

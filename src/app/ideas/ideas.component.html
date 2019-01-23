@@ -1,0 +1,76 @@
+<div class="container-fluid">
+
+  <div class="row">
+    <div class="col-sm-6">
+      <h1>Nouvelle idée</h1>
+      <form>
+
+        <div class="row">
+          <div *ngIf="listegenres" class="form-group ">
+            <label class="control-label"> Genre : </label>
+            <select class="form-control" name="genre" [(ngModel)]="idea.genre" >
+              <option *ngFor="let elt of listegenres._embedded.genres"  [ngValue]="elt" >{{elt.genre}}</option>
+            </select>
+          </div>
+          <div *ngIf="listTypeIdees"  class="form-group ">
+            <label class="control-label"> Type idée :</label>
+            <select  class="form-control" name="typeIdee" [(ngModel)]="idea.typeIdee" >
+              <option *ngFor="let element of listTypeIdees._embedded.typeIdees"  [ngValue]="element" >{{element.typeIdee}}</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="form-group" >
+            <label class="control-label">Titre :</label>
+            <input placeholder="Titre" name="titre" class="form-control" type="text" [(ngModel)]="idea.titre">
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="form-group" >
+            <label class="control-label"> Synopsis :</label>
+            <textarea placeholder="Idée..." class="form-control" type="text"  name="idea" [(ngModel)]="idea.idee"></textarea>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="form-group " >
+            <label class="control-label"> Mots clée</label>
+            <input class="form-control" placeholder="Mots clés"
+                   [matChipInputFor]="chipList"
+                   [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                   [matChipInputAddOnBlur]="addOnBlur"
+                   (matChipInputTokenEnd)="add($event)">
+            <mat-chip-list #chipList>
+              <mat-chip *ngFor="let mc of motscles" [selectable]="selectable"
+                        [removable]="removable" (removed)="remove(mc)">
+                {{mc.mCle}}
+                <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+              </mat-chip>
+            </mat-chip-list>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="form-group " >
+            <button type="button" (click)="saveIdeeANDMotscle()"  class="btn btn-primary">Ajouter</button>
+            <button type="button" (click)="genererDesIdees()" class="btn .btn-info">Generer des idées</button>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="col-sm-6" *ngIf="ideeGenerees">
+      <h1> Idées proposées</h1>
+    <div class="col-sm-6"  *ngFor="let item of ideeGenerees ; let i=index">
+      <div class="panel panel-primary" >
+        <div class="panel-heading" >Proposition {{i+1}}</div>
+        <div class="panel-body">{{ item }}</div>
+      </div>
+    </div>
+    </div>
+  </div>
+
+</div>
+
+

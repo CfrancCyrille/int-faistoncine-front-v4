@@ -1,0 +1,55 @@
+<nav id="mainNavbar" class="navbar navbar-expand-lg navbar-dark bg-dark navbar-inverse">
+  <div class="navbar-header">
+
+      <img src="assets/Image 1.png" alt="image" class="img-circle" width="50" height="50"/>
+      &nbsp;
+      &nbsp;
+    <a class="navbar-brand" style="color:azure">FaisTonCine</a>
+  </div>
+  <button class="navbar-toggler" type="button" data-toggle="collapse"
+      data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+      aria-expanded="false" aria-label="Toggle navigation"
+      (click)="toggleCollapsed()">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div id="navbarSupportedContent" [ngClass]="{'collapse': collapsed, 'navbar-collapse': true}">
+    <ul class="mr-auto navbar-nav" routerLinkActive="active">
+      <li class="nav-item active"><a [routerLink]="['home']" class="nav-link btn btn-outline-success m-2">Home</a></li>
+      <li class="nav-item active"><a [routerLink]="['ideas']" class="nav-link btn btn-outline-success m-2">Nouvelle Idee</a></li>
+      <li class="nav-item active"><a [routerLink]="['listeDesIdees']" class="nav-link btn btn-outline-success m-2">Idées</a></li>
+      <li class="nav-item active"><a [routerLink]="['book']" class="nav-link btn btn-outline-success m-2">Visitors Book</a></li>
+      <li class="nav-item active"><a [routerLink]="['/404']" class="nav-link btn btn-outline-success m-2">...</a></li>
+
+    </ul>
+
+
+    <ul class="nav navbar-nav navbar-right">
+      <span style="color:azure">{{userPseudo}}</span>
+      <li>
+        <form class="form-inline navbar-left m-2" action="/actionpage.php">
+          <input id="searchbar" type="text" class="form-control mr-sm-2" placeholder="Search">
+          <button id="searchbtn" class="nav-link btn btn-outline-success my-sm-0" type="submit">
+            <i id="loupe" class="fa fa-search"></i>
+          </button>
+        </form>
+      </li>
+      <div *ngIf="authenticationService.user | async ;then authenticated else guest">
+      </div>
+
+      <ng-template #guest>
+
+        <button (click)="googleLogin()" [routerLink]="['login']" class="btn btn-outline-success" style="color:azure">Log In
+          <a href="login"></a></button>
+      </ng-template>
+
+      <ng-template #authenticated>
+        <img [src]="getUserPicture()" id="picture"  width="50" height="50">
+        &nbsp;
+        &nbsp;
+        <button (click)="logout()" class="btn btn-outline-warning" style="color:azure">Log Out</button>
+      </ng-template>
+    </ul>
+  </div>
+
+
+</nav>

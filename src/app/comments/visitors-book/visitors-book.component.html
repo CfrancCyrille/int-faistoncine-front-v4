@@ -1,0 +1,46 @@
+<div style="text-align:center">
+  <h1>
+    Commentaires sur l'idée
+  </h1>
+  <app-add-commentaire></app-add-commentaire><div class="liste">
+  <div class="container">
+    <div *ngFor="let commentaire of commentaires">
+      <div class="row">
+        <div class="col-12">
+          <h5> id de l'idee {{commentaire.idIdee}}</h5>
+          <p>{{commentaire.text}}</p>
+
+        </div>
+        <div class="col-2">
+          <app-avispositif></app-avispositif> 
+          <app-avisnegatif></app-avisnegatif>
+          <button class="btn btn-success" (click)="editCommentaire($event, commentaire)">Edit</button>
+        </div>
+      </div>
+      <div *ngIf="editState && commentaireToEdit.id == commentaire.id">
+        <form (ngSubmit)="updateCommentaire(commentaire)">
+          <div class="form-row">
+            <div class="col-10">
+              <textarea rows="3" style="min-width: 100%!important;" placeholder="My comment" [(ngModel)]="commentaire.text" name="commentaire">
+              </textarea>
+            </div>
+            <div class="col-2">
+              <table class="table">
+                <tr>
+                  <input type="submit" value="Update" class="align-top btn btn-success">
+                </tr>
+                <tr>
+                  <button class="align-middle btn btn-success" *ngIf="editState && commentaireToEdit.id == commentaire.id" (click)="clearState()">Clear</button>
+                </tr>
+                <tr>
+                  <button class="align-bottom btn btn-success" (click)="deleteCommentaire($event, commentaire)">Delete</button>                    
+                </tr>
+              </table>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
